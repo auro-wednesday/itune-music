@@ -149,7 +149,7 @@
     "compression-webpack-plugin": "8.0.0",
     "coveralls": "3.0.3",
     "css-loader": "^5.2.6",
-    "eslint": "5.16.0",
+    "eslint": "^5.16.0",
     "eslint-config-airbnb": "17.1.0",
     "eslint-config-airbnb-base": "13.1.0",
     "eslint-config-prettier": "6.4.0",
