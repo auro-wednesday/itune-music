@@ -3,18 +3,18 @@
  * Itunes
  *
  */
-
 import React, { useState } from 'react';
 // import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 // import { Helmet } from 'react-helmet';
 import debounce from 'lodash/debounce';
+import get from 'lodash/get';
 import { injectSaga } from 'redux-injectors';
 
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import makeSelectItunes from './selectors';
+import makeSelectItunes, { selectItunesData, selectItunesError, selectItunesName } from './selectors';
 import { isEmpty } from 'lodash';
 import { itunesCreators } from './reducer';
 
@@ -31,7 +31,7 @@ export function Itunes({ itunesName, ituneData, ituneError, dispatchItunesList, 
   const handleOnClick = (txt) => {
     if (!isEmpty(txt)) {
       dispatchItunesList(txt);
-      console.log(txt);
+      console.log(ituneData);
     } else {
       dispatchClearItunesList();
     }
@@ -74,7 +74,10 @@ export function Itunes({ itunesName, ituneData, ituneError, dispatchItunesList, 
 Itunes.propTypes = {};
 
 const mapStateToProps = createStructuredSelector({
-  itunes: makeSelectItunes()
+  itunes: makeSelectItunes(),
+  itunesData: selectItunesData(),
+  itunesError: selectItunesError(),
+  ItunesName: selectItunesName()
 });
 
 function mapDispatchToProps(dispatch) {

@@ -10,7 +10,7 @@ import get from 'lodash/get';
 export const initialState = { ituneName: null, ituneData: [], ituneError: null };
 
 export const { Types: itunesTypes, Creators: itunesCreators } = createActions({
-  requestGetItunesList: ['ituneName'],
+  requestGetItunesList: ['itunesName'],
   successGetItunesList: ['data'],
   failureGetitunesList: ['error'],
   clearItunesList: []
@@ -21,18 +21,19 @@ export const itunesReducer = (state = initialState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
       case itunesTypes.REQUEST_GET_ITUNES_LIST:
-        draft.ituneName = action.ituneName;
-        console.log('REQUEST_GET_ITUNE++', action.ituneName);
+        draft.itunesName = action.itunesName;
+        console.log('REQUEST_GET_ITUNE++', action.itunesName);
         break;
       case itunesTypes.CLEAR_ITUNES_LIST: {
         console.log('clr list');
         return initialState;
       }
-      case itunesTypes.SUCCESS_GET_ITUNE_LIST:
-        draft.ituneData = action.data;
+      case itunesTypes.SUCCESS_GET_ITUNES_LIST:
+        draft.itunesData = action.data;
+        console.log('REQUEST_GET_ITUNE--', action.data);
         break;
       case itunesTypes.FAILURE_GET_ITUNES_LIST:
-        draft.ituneError = get(action.error, 'message', 'something_went_wrong');
+        draft.itunesError = get(action.error, 'message', 'something_went_wrong');
 
       default:
         return state;
