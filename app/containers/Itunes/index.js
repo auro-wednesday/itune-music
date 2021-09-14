@@ -10,30 +10,33 @@ import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 // import { Helmet } from 'react-helmet';
 import debounce from 'lodash/debounce';
+import { injectSaga } from 'redux-injectors';
 
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-// import { useInjectSaga } from '@utils/injectSaga'
 import makeSelectItunes from './selectors';
-// import saga from './saga';
+import { isEmpty } from 'lodash';
+import { itunesCreators } from './reducer';
 
-export function Itunes() {
+import itunesSaga from './saga';
+
+export function Itunes({ itunesName, ituneData, ituneError, dispatchItunesList, dispatchClearItunesList }) {
   const [name, SetName] = useState();
   const [data, SetData] = useState('');
   const API = 'https://itunes.apple.com/search?term=';
-  // useInjectSaga({ key: 'itunes', saga })
 
   const handleOnChange = (txt) => {
     SetName(txt);
   };
   const handleOnClick = (txt) => {
-    handleApi(txt);
+    if (!isEmpty(txt)) {
+      dispatchItunesList(txt);
+      console.log(txt);
+    } else {
+      dispatchClearItunesList();
+    }
   };
-  const handleApi = (txt) => {
-    fetch(API + txt)
-      .then((res) => res.json())
-      .then((data) => SetData(data.results));
-  };
+
   const debouncedHandleOnChange = debounce(handleOnChange, 200);
   return (
     <div>
@@ -75,13 +78,15 @@ const mapStateToProps = createStructuredSelector({
 });
 
 function mapDispatchToProps(dispatch) {
+  const { requestGetItunesList, clearItunesList } = itunesCreators;
   return {
-    dispatch
+    dispatchItunesList: (txt) => dispatch(requestGetItunesList(txt)),
+    dispatchClearItunesList: () => dispatch(clearItunesList())
   };
 }
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-export default compose(withConnect)(Itunes);
+export default compose(withConnect, injectSaga({ key: 'itunes', saga: itunesSaga }))(Itunes);
 
 export const ItunesTest = compose(injectIntl)(Itunes);
