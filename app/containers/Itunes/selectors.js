@@ -8,15 +8,16 @@ import { initialState } from './reducer';
 
 const selectItunesDomain = (state) => state.itunes || initialState;
 
-const makeSelectItunes = () => createSelector(selectItunesDomain, (substate) => substate);
+export const makeSelectItunes = () => createSelector(selectItunesDomain, (substate) => substate);
 
 export const selectItunesData =()=>
-createSelector(selectItunesDomain,(substate)=> {get(substate),'itunesData';console.log("yo",substate)});
+createSelector(selectItunesDomain,(substate)=> get(substate,'itunesData'));
 
 export const selectItunesError=()=>
 createSelector(selectItunesDomain,(substate)=> get(substate,'itunesError'));
 
 export const selectItunesName=()=>
-createSelector(selectItunesDomain,(substate)=>get(substate,'itunesName'))
-export default makeSelectItunes;
+createSelector(selectItunesDomain,(substate)=>get(substate,'itunesName'));
+
+
 

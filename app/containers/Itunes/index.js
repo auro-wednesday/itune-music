@@ -14,13 +14,14 @@ import { injectSaga } from 'redux-injectors';
 
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import makeSelectItunes, { selectItunesData, selectItunesError, selectItunesName } from './selectors';
+
+import {makeSelectItunes, selectItunesData, selectItunesError, selectItunesName} from './selectors'
 import { isEmpty } from 'lodash';
 import { itunesCreators } from './reducer';
 
 import itunesSaga from './saga';
 
-export function Itunes({ itunesName, ituneData, ituneError, dispatchItunesList, dispatchClearItunesList }) {
+export function Itunes({ itunesName, itunesData={}, ituneError, dispatchItunesList, dispatchClearItunesList }) {
   const [name, SetName] = useState();
   const [data, SetData] = useState('');
   const API = 'https://itunes.apple.com/search?term=';
@@ -31,13 +32,33 @@ export function Itunes({ itunesName, ituneData, ituneError, dispatchItunesList, 
   const handleOnClick = (txt) => {
     if (!isEmpty(txt)) {
       dispatchItunesList(txt);
-      console.log(ituneData);
+      console.log(get(itunesData,'results'));
     } else {
       dispatchClearItunesList();
     }
   };
 
   const debouncedHandleOnChange = debounce(handleOnChange, 200);
+
+  const renderItunesList=()=>{
+    const data= get(itunesData,'results',[]);
+    if(!isEmpty(data)){
+      return(
+        <div>{Object.keys(data).map((item,id)=>{
+          return(
+            <div key={id}>
+              {data[item].artistName}   <span style={{fontWeight:"bold"}}>{data[item].trackName}</span>
+            </div>
+          )
+        })}
+
+        </div>
+
+
+      )
+    }
+
+  }
   return (
     <div>
       <input
@@ -56,16 +77,7 @@ export function Itunes({ itunesName, ituneData, ituneError, dispatchItunesList, 
         SEARCH
       </button>
       <div>
-        {Object.keys(data).map((item, id) => {
-          return (
-            <div key={id}>
-              <div>
-                {data[item].artistName}
-                <span style={{ fontWeight: 'bold' }}> {data[item].trackName}</span>
-              </div>
-            </div>
-          );
-        })}
+        {renderItunesList()}
       </div>
     </div>
   );
