@@ -6,8 +6,8 @@ const { REQUEST_GET_ITUNES_LIST } = itunesTypes;
 const { successGetItunesList, failureGetitunesList } = itunesCreators;
 
 export function* getItuneData(action) {
-  console.log('saga==', action.ituneName);
-  const response = yield call(itunesApi, action.ituneName);
+  console.log('saga==', action.itunesName);
+  const response = yield call(itunesApi, action.itunesName);
   const { data } = response;
   if (data) {
     yield put(successGetItunesList(data));

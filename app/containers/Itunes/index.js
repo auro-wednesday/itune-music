@@ -63,6 +63,7 @@ export function Itunes({ itunesName, itunesData={}, ituneError, dispatchItunesLi
     <div>
       <input
         type="text"
+        data-testid="search-bar"
         className="songNameInput"
         placeholder="search"
         onChange={(e) => {

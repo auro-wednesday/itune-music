@@ -7,7 +7,7 @@ import produce from 'immer';
 import { createActions } from 'reduxsauce';
 import get from 'lodash/get';
 
-export const initialState = { ituneName: null, ituneData: [], ituneError: null };
+export const initialState = { itunesName: null, itunesData: [], itunesError: null };
 
 export const { Types: itunesTypes, Creators: itunesCreators } = createActions({
   requestGetItunesList: ['itunesName'],
