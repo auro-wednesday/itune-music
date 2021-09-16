@@ -22,7 +22,7 @@ describe('Itunes saga tests', () => {
     const res = getItunesListGenerator.next().value;
     expect(res).toEqual(call(itunesApi, itunesName));
     const errorResponse = {
-      errorMessage: 'There was an error while fetching data'
+      errorMessage: 'some error occured'
     };
     expect(getItunesListGenerator.next().value).toEqual(
       put({
@@ -38,9 +38,9 @@ describe('Itunes saga tests', () => {
     expect(res).toEqual(call(itunesApi, itunesName));
     const reposResponse = {
       totalCount: 50,
-      items: [{ songName: itunesName }]
+      items: [{ songName: 'Billie Jean', songArtist: 'Michael Jackson' }]
     };
-    expect(getItunesListGenerator.nest().value).toEqual(
+    expect(getItunesListGenerator.next().value).toEqual(
       put({
         type: itunesTypes.SUCCESS_GET_ITUNES_LIST,
         data: reposResponse

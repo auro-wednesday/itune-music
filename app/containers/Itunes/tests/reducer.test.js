@@ -13,7 +13,7 @@ describe('Itunes reducer tests', () => {
   });
 
   it('should return the initital state when action of type FETCH_SONG is dispatched', () => {
-    const itunesName = 'Adele';
+    const itunesName = null;
     const expectedResult = { ...state, itunesName };
     expect(
       itunesReducer(state, {
@@ -46,7 +46,7 @@ describe('Itunes reducer tests', () => {
   });
 
   it('should ensure that when CLEAR_ITUNES_LIST is dispactched it clears all data', () => {
-    const expectedResult = { ...state, itunesData: {} };
+    const expectedResult = { ...state, itunesData: [] };
     expect(
       itunesReducer(state, {
         type: itunesTypes.CLEAR_ITUNES_LIST
