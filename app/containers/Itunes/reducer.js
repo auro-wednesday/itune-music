@@ -7,7 +7,7 @@ import produce from 'immer';
 import { createActions } from 'reduxsauce';
 import get from 'lodash/get';
 
-export const initialState = { itunesName: null, itunesData:[], itunesError: null };
+export const initialState = { itunesName: null, itunesData: [], itunesError: null };
 
 export const { Types: itunesTypes, Creators: itunesCreators } = createActions({
   requestGetItunesList: ['itunesName'],
@@ -20,21 +20,13 @@ export const { Types: itunesTypes, Creators: itunesCreators } = createActions({
 export const itunesReducer = (state = initialState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
-
       case itunesTypes.CLEAR_ITUNES_LIST:
-        {
-          console.log("clear",initialState)
-          return initialState;
-
-      }
-
+        return initialState;
       case itunesTypes.SUCCESS_GET_ITUNES_LIST:
         draft.itunesData = action.data;
         break;
       case itunesTypes.FAILURE_GET_ITUNES_LIST:
         draft.itunesError = get(action.error, 'message', 'something_went_wrong');
-
-
     }
   });
 

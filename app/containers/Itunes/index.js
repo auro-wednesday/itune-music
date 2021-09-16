@@ -3,14 +3,14 @@
  * Itunes
  *
  */
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 // import { Helmet } from 'react-helmet';
 import debounce from 'lodash/debounce';
 import get from 'lodash/get';
-import { Card, Skeleton, Input } from 'antd';
+import { Card, Input } from 'antd';
 import styled from 'styled-components';
 import { injectSaga } from 'redux-injectors';
 
@@ -23,6 +23,7 @@ import { isEmpty } from 'lodash';
 import { itunesCreators } from './reducer';
 
 import itunesSaga from './saga';
+const { Search } = Input;
 
 const CustomCard = styled(Card)`
   && {
@@ -50,47 +51,34 @@ export function Itunes({
   maxwidth,
   padding
 }) {
-  const [songName, SetSongName] = useState();
-  const [data, SetData] = useState();
-
   const handleOnChange = (inputText) => {
     if (!isEmpty(inputText)) {
       dispatchRequestItunesList(inputText);
-      SetData(get(itunesData, 'results'));
     } else {
       dispatchClearItunesList();
-      SetData(get(itunesData, 'results'));
-    }
-    SetSongName(inputText);
-  };
-
-  const handleOnClick = (inputText) => {
-    if (!isEmpty(inputText)) {
-      dispatchRequestItunesList(inputText);
-      SetData(get(itunesData, 'results'));
-    } else {
-      dispatchClearItunesList();
-      SetData(get(itunesData, 'results'));
     }
   };
 
   const debouncedHandleOnChange = debounce(handleOnChange, 200);
 
   const renderItunesList = () => {
-    console.log(data);
+    const data = get(itunesData, 'results');
     if (!isEmpty(data)) {
       return (
         <div>
           <CustomCard>
             {Object.keys(data).map((item, id) => {
-              return (
-                <div key={id}>
-                <CustomCard>
-                {data[item].artistName}<hr/><span style={{ fontWeight: 'bold' }}>{data[item].trackName}</span>
-                </CustomCard>
-
-                </div>
-              );
+              if (data[item].kind === 'song') {
+                return (
+                  <div key={id}>
+                    <CustomCard>
+                      {data[item].artistName}
+                      <hr />
+                      <span style={{ fontWeight: 'bold' }}>{data[item].trackName}</span>
+                    </CustomCard>
+                  </div>
+                );
+              }
             })}
           </CustomCard>
         </div>
@@ -102,19 +90,13 @@ export function Itunes({
       <CustomCard maxwidth={maxwidth} title={intl.formatMessage({ id: 'some_music' })}>
         <T marginBottom={10} id="search_Itunes" />
 
-        <input
-          type="text"
+        <Search
           data-testid="search-bar"
-          placeholder="search"
+          placeholder="Search"
+          type="text"
           onChange={(e) => debouncedHandleOnChange(e.target.value)}
-        ></input>
-        <button
-          onClick={() => {
-            handleOnClick(songName);
-          }}
-        >
-          SEARCH
-        </button>
+          onSearch={(searchText) => debouncedHandleOnChange(searchText)}
+        />
       </CustomCard>
 
       <div>{renderItunesList()}</div>
@@ -154,6 +136,6 @@ function mapDispatchToProps(dispatch) {
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-export default compose(withConnect,injectIntl, injectSaga({ key: 'itunes', saga: itunesSaga }))(Itunes);
+export default compose(withConnect, injectIntl, injectSaga({ key: 'itunes', saga: itunesSaga }))(Itunes);
 
 export const ItunesTest = compose(injectIntl)(Itunes);

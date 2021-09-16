@@ -8,15 +8,11 @@ const { successGetItunesList, failureGetitunesList } = itunesCreators;
 export function* getItuneData(action) {
   try {
     const response = yield call(itunesApi, action.itunesName);
-    const data  = response.data;
-    console.log(data)
-    if (data) {
-      yield put(successGetItunesList(data));
-    } else {
-      yield put(failureGetitunesList(data));
-    }
+    const data = response.data;
+
+    yield put(successGetItunesList(data));
   } catch (error) {
-    console.log(error);
+    yield put(failureGetitunesList(error));
   }
 }
 

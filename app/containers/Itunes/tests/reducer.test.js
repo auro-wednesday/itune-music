@@ -13,7 +13,7 @@ describe('Itunes reducer tests', () => {
   });
 
   it('should return the initital state when action of type FETCH_SONG is dispatched', () => {
-    const itunesName = "Adele"
+    const itunesName = 'Adele';
     const expectedResult = { ...state, itunesName };
     expect(
       itunesReducer(state, {
@@ -23,33 +23,32 @@ describe('Itunes reducer tests', () => {
     ).toEqual(expectedResult);
   });
 
-  it('should ensure that the itunes data is present and itunesError=null',()=>{
-    const data = { ItunesName: 'Adele'};
-    const expectedResult = {...state, itunesError:null, itunesData: data};
+  it('should ensure that the itunes data is present and itunesError=null', () => {
+    const data = { ItunesName: 'Adele' };
+    const expectedResult = { ...state, itunesError: null, itunesData: data };
     expect(
-      itunesReducer(state,{
+      itunesReducer(state, {
         type: itunesTypes.SUCCESS_GET_ITUNES_LIST,
         data
       })
     ).toEqual(expectedResult);
   });
 
-  it('should ensure that when FAILURE_GET_ITUNES_LIST it shows itunesError',()=>{
+  it('should ensure that when FAILURE_GET_ITUNES_LIST it shows itunesError', () => {
     const error = 'something_went_wrong';
-    const expectedResult = {...state, itunesError: error};
+    const expectedResult = { ...state, itunesError: error };
     expect(
-      itunesReducer(state,{
+      itunesReducer(state, {
         type: itunesTypes.FAILURE_GET_ITUNES_LIST,
         error
       })
     ).toEqual(expectedResult);
   });
 
-  it('should ensure that when CLEAR_ITUNES_LIST is dispactched it clears all data',()=>{
-
-    const expectedResult = {...state, itunesData:{}};
+  it('should ensure that when CLEAR_ITUNES_LIST is dispactched it clears all data', () => {
+    const expectedResult = { ...state, itunesData: {} };
     expect(
-      itunesReducer(state,{
+      itunesReducer(state, {
         type: itunesTypes.CLEAR_ITUNES_LIST
       })
     ).toEqual(expectedResult);

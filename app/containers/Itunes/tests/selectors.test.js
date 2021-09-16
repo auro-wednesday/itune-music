@@ -20,7 +20,7 @@ describe('Itunes selector tests', () => {
 
   it('should select the itunes state', () => {
     const itunesSelector = makeSelectItunes();
-    expect(selectItunesDomain(mockedState)).toEqual(mockedState.itunes);
+    expect(itunesSelector(mockedState)).toEqual(mockedState.itunes);
   });
   it('should select the itunesName', () => {
     const ituneNameSelector = selectItunesName();
