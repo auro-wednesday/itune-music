@@ -99,7 +99,7 @@ export function Itunes({
   };
   return (
     <Container maxwidth={maxwidth} paddig={padding}>
-      <CustomCard maxwidth={maxwidth}>
+      <CustomCard maxwidth={maxwidth} title={intl.formatMessage({ id: 'some_music' })}>
         <T marginBottom={10} id="search_Itunes" />
 
         <input
@@ -154,6 +154,6 @@ function mapDispatchToProps(dispatch) {
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-export default compose(withConnect, injectSaga({ key: 'itunes', saga: itunesSaga }))(Itunes);
+export default compose(withConnect,injectIntl, injectSaga({ key: 'itunes', saga: itunesSaga }))(Itunes);
 
 export const ItunesTest = compose(injectIntl)(Itunes);
