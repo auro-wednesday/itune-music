@@ -8,7 +8,7 @@ import { itunesApi } from '@app/services/itunesApi';
 import { takeLatest } from 'redux-saga/effects';
 import itunesSaga, {  getItuneData } from '../saga';
 import { itunesTypes } from '../reducer';
-import { apiResponseGenerator } from '@app/utils/testUtils';
+
 
 describe('Itunes saga tests', () => {
   const generator = itunesSaga();

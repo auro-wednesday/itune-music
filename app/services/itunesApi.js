@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-export const itunesApi = (txt) => {
-  console.log("API__",txt);
+export const itunesApi = (searchTerm) => {
+  console.log("API__",searchTerm);
   return axios.request({
     method: 'get',
-    url: `https://itunes.apple.com/search?term=${txt}`
+    url: `https://itunes.apple.com/search?term=${searchTerm}`
   });
 };

@@ -3,7 +3,7 @@
  * Itunes
  *
  */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
@@ -15,24 +15,30 @@ import { injectSaga } from 'redux-injectors';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
-import {makeSelectItunes, selectItunesData, selectItunesError, selectItunesName} from './selectors'
+import { makeSelectItunes, selectItunesData, selectItunesError, selectItunesName } from './selectors';
 import { isEmpty } from 'lodash';
 import { itunesCreators } from './reducer';
 
 import itunesSaga from './saga';
 
-export function Itunes({ itunesName, itunesData={}, ituneError, dispatchItunesList, dispatchClearItunesList }) {
-  const [name, SetName] = useState();
-  const [data, SetData] = useState('');
-  const API = 'https://itunes.apple.com/search?term=';
+export function Itunes({ itunesName, itunesData = {}, ituneError, dispatchItunesList, dispatchClearItunesList }) {
+  const [songName, SetSongName] = useState();
+  const [data, SetData] = useState();
 
-  const handleOnChange = (txt) => {
-    SetName(txt);
+  const handleOnChange = (inputText) => {
+    SetSongName(inputText);
+    if (!isEmpty(inputText)) {
+      dispatchItunesList(inputText);
+      SetData(get(itunesData, 'results'));
+    } else {
+      dispatchClearItunesList();
+    }
   };
-  const handleOnClick = (txt) => {
-    if (!isEmpty(txt)) {
-      dispatchItunesList(txt);
-      console.log(get(itunesData,'results'));
+
+  const handleOnClick = (inputText) => {
+    if (!isEmpty(inputText)) {
+      dispatchItunesList(inputText);
+      SetData(get(itunesData, 'results'));
     } else {
       dispatchClearItunesList();
     }
@@ -40,31 +46,26 @@ export function Itunes({ itunesName, itunesData={}, ituneError, dispatchItunesLi
 
   const debouncedHandleOnChange = debounce(handleOnChange, 200);
 
-  const renderItunesList=()=>{
-    const data= get(itunesData,'results',[]);
-    if(!isEmpty(data)){
-      return(
-        <div>{Object.keys(data).map((item,id)=>{
-          return(
-            <div key={id}>
-              {data[item].artistName}   <span style={{fontWeight:"bold"}}>{data[item].trackName}</span>
-            </div>
-          )
-        })}
-
+  const renderItunesList = () => {
+    if (!isEmpty(data)) {
+      return (
+        <div>
+          {Object.keys(data).map((item, id) => {
+            return (
+              <div key={id}>
+                {data[item].artistName} <span style={{ fontWeight: 'bold' }}>{data[item].trackName}</span>
+              </div>
+            );
+          })}
         </div>
-
-
-      )
+      );
     }
-
-  }
+  };
   return (
     <div>
       <input
         type="text"
         data-testid="search-bar"
-        className="songNameInput"
         placeholder="search"
         onChange={(e) => {
           debouncedHandleOnChange(e.target.value);
@@ -72,14 +73,12 @@ export function Itunes({ itunesName, itunesData={}, ituneError, dispatchItunesLi
       ></input>
       <button
         onClick={() => {
-          handleOnClick(name);
+          handleOnClick(songName);
         }}
       >
         SEARCH
       </button>
-      <div>
-        {renderItunesList()}
-      </div>
+      <div>{renderItunesList()}</div>
     </div>
   );
 }
@@ -96,7 +95,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   const { requestGetItunesList, clearItunesList } = itunesCreators;
   return {
-    dispatchItunesList: (txt) => dispatch(requestGetItunesList(txt)),
+    dispatchItunesList: (InputTerm) => dispatch(requestGetItunesList(InputTerm)),
     dispatchClearItunesList: () => dispatch(clearItunesList())
   };
 }
