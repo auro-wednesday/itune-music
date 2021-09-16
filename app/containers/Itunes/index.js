@@ -14,7 +14,7 @@ import { Card, Skeleton, Input } from 'antd';
 import styled from 'styled-components';
 import { injectSaga } from 'redux-injectors';
 
-import { T } from '@app/components/T/index';
+import { T } from '@components/T';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 

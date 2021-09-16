@@ -6,16 +6,16 @@ const { REQUEST_GET_ITUNES_LIST } = itunesTypes;
 const { successGetItunesList, failureGetitunesList } = itunesCreators;
 
 export function* getItuneData(action) {
-  const response = yield call(itunesApi, action.itunesName);
-  const { data } = response;
-  try{
-      if (data) {
+  try {
+    const response = yield call(itunesApi, action.itunesName);
+    const data  = response.data;
+    console.log(data)
+    if (data) {
       yield put(successGetItunesList(data));
     } else {
       yield put(failureGetitunesList(data));
     }
-  }
-  catch(error){
+  } catch (error) {
     console.log(error);
   }
 }
