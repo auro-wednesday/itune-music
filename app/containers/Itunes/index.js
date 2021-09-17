@@ -14,7 +14,7 @@ import { Card, Input } from 'antd';
 import styled from 'styled-components';
 import { injectSaga } from 'redux-injectors';
 
-import { T } from '@components/T';
+import T from '@components/T';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
@@ -43,14 +43,7 @@ const Container = styled.div`
     padding: ${(props) => props.padding}px;
   }
 `;
-export function Itunes({
-  intl,
-  itunesData = {},
-  dispatchRequestItunesList,
-  dispatchClearItunesList,
-  maxwidth,
-  padding
-}) {
+export function Itunes({ intl, itunesData, dispatchRequestItunesList, dispatchClearItunesList, maxwidth, padding }) {
   const handleOnChange = (inputText) => {
     if (!isEmpty(inputText)) {
       dispatchRequestItunesList(inputText);
