@@ -3,7 +3,7 @@
  * Itunes
  *
  */
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
@@ -31,6 +31,7 @@ const CustomCard = styled(Card)`
     max-width: ${(props) => props.maxwidth};
     color: ${(props) => props.color};
     ${(props) => props.color && `color: ${props.color}`};
+    text-align: center;
   }
 `;
 const Container = styled.div`
@@ -43,7 +44,38 @@ const Container = styled.div`
     padding: ${(props) => props.padding}px;
   }
 `;
+const ContainerResults = styled.div`
+  && {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    flex-direction: row;
+    max-width: 600px;
+    width: 100%;
+
+    margin: 0 auto;
+    padding: ${(props) => props.padding}px;
+    text-align: center;
+  }
+`;
+const CustomCardResults = styled(Card)`
+  && {
+    margin: 20px 0;
+    max-width: 200px;
+    height: 100%;
+    color: ${(props) => props.color};
+    ${(props) => props.color && `color: ${props.color}`};
+    text-align: center;
+  }
+`;
+
 export function Itunes({ intl, itunesData, dispatchRequestItunesList, dispatchClearItunesList, maxwidth, padding }) {
+  const [playing, setPlaying] = useState(false);
+  let audio = new Audio();
+
+  const handlePlayOnClick = (previewUrl) => {
+    playing ? audio.play(previewUrl) : audio.pause(previewUrl);
+  };
+
   const handleOnChange = (inputText) => {
     if (!isEmpty(inputText)) {
       dispatchRequestItunesList(inputText);
@@ -59,41 +91,57 @@ export function Itunes({ intl, itunesData, dispatchRequestItunesList, dispatchCl
     if (!isEmpty(data)) {
       return (
         <div>
-          <CustomCard>
+          <ContainerResults>
             {Object.keys(data).map((item, id) => {
               if (data[item].kind === 'song') {
                 return (
                   <div key={id}>
-                    <CustomCard>
-                      {data[item].artistName}
-                      <hr />
-                      <span style={{ fontWeight: 'bold' }}>{data[item].trackName}</span>
-                    </CustomCard>
+                    <CustomCardResults>
+                      <img src={data[item].artworkUrl100}></img>
+                      <div>
+                        {data[item].artistName}
+                        <hr />
+                        <span style={{ fontWeight: 'bold' }}>{data[item].trackName}</span>
+                        <div>
+                          <button
+                            onClick={() => {
+                              setPlaying(!playing);
+                              handlePlayOnClick(data[item].previewUrl);
+                            }}
+                          >
+                            {playing ? 'Stop' : 'Play'}
+                          </button>
+                        </div>
+                      </div>
+                    </CustomCardResults>
                   </div>
                 );
               }
             })}
-          </CustomCard>
+          </ContainerResults>
         </div>
       );
     }
   };
   return (
-    <Container maxwidth={maxwidth} paddig={padding}>
-      <CustomCard maxwidth={maxwidth} title={intl.formatMessage({ id: 'some_music' })}>
-        <T marginBottom={10} id="search_Itunes" />
+    <div>
+      <Container maxwidth={maxwidth} paddig={padding}>
+        <CustomCard maxwidth={maxwidth} title={intl.formatMessage({ id: 'some_music' })}>
+          <T marginBottom={10} id="search_Itunes" />
 
-        <Search
-          data-testid="search-bar"
-          placeholder="Search"
-          type="text"
-          onChange={(e) => debouncedHandleOnChange(e.target.value)}
-          onSearch={(searchText) => debouncedHandleOnChange(searchText)}
-        />
-      </CustomCard>
-
-      <div>{renderItunesList()}</div>
-    </Container>
+          <Search
+            data-testid="search-bar"
+            placeholder="Search"
+            type="text"
+            onChange={(e) => debouncedHandleOnChange(e.target.value)}
+            onSearch={(searchText) => debouncedHandleOnChange(searchText)}
+          />
+        </CustomCard>
+      </Container>
+      <ContainerResults>
+        <div>{renderItunesList()}</div>
+      </ContainerResults>
+    </div>
   );
 }
 
@@ -107,7 +155,7 @@ Itunes.propTypes = {
   padding: PropTypes.number
 };
 Itunes.defaultProps = {
-  maxwidth: 500,
+  maxwidth: 400,
   padding: 20,
   itunesData: {}
 };
