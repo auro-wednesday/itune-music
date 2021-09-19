@@ -70,9 +70,9 @@ const CustomCardResults = styled(Card)`
 
 export function Itunes({ intl, itunesData, dispatchRequestItunesList, dispatchClearItunesList, maxwidth, padding }) {
   const [playing, setPlaying] = useState(false);
-  let audio = new Audio();
 
   const handlePlayOnClick = (previewUrl) => {
+    const audio = new Audio(previewUrl);
     playing ? audio.play(previewUrl) : audio.pause(previewUrl);
   };
 
