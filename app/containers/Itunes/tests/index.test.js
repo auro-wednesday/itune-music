@@ -11,25 +11,19 @@ import { fireEvent } from '@testing-library/dom';
 import { ItunesTest as Itunes } from '../index';
 
 describe('<Itunes /> container tests', () => {
-  let submitSpy;
-
+  let props;
+  const mockDispatchRequestItunesList = jest.fn();
+  const mockClearItunesList = jest.fn();
   beforeEach(() => {
-    submitSpy = jest.fn();
+    props = { dispatchRequestItunesList: mockDispatchRequestItunesList, dispatchClearItunesList: mockClearItunesList };
+  });
+  afterEach(() => {
+    jest.clearAllMocks();
   });
   it('should render and match the snapshot', () => {
-    const { baseElement } = renderProvider(
-      <Itunes dispatchRequestItunesList={submitSpy} dispatchClearItunesList={submitSpy} />
-    );
+    const { baseElement } = renderProvider(<Itunes {...props} />);
     expect(baseElement).toMatchSnapshot();
   });
-  // it('should update playing state on button click', () => {
-  //   const mockbuttonclick = jest.fn();
-
-  //   const { getByTestId } = renderProvider(<button onClick={mockbuttonclick}></button>);
-
-  //   fireEvent.click(getByTestId('play-button'));
-  //   expect(mockbuttonclick).toHaveBeenCalled();
-  // });
 
   it('should call dipatchClearItunesList on empty change', async () => {
     const getItunesListSpy = jest.fn();
@@ -51,14 +45,12 @@ describe('<Itunes /> container tests', () => {
     expect(clearItunesListSpy).toBeCalled();
   });
 
-  it('should call dispatchItunesList on change', async () => {
-    const { getByTestId } = renderProvider(
-      <Itunes dispatchRequestItunesList={submitSpy} dispatchClearItunesList={submitSpy} />
-    );
+  it('should call dispatchRequestItunesList on change', async () => {
+    const { getByTestId } = renderProvider(<Itunes {...props} />);
     fireEvent.change(getByTestId('search-bar'), {
       target: { value: 'any' }
     });
     await timeout(500);
-    expect(submitSpy).toBeCalled();
+    expect(mockDispatchRequestItunesList).toBeCalled();
   });
 });
