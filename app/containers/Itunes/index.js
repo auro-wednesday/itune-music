@@ -3,7 +3,7 @@
  * Itunes
  *
  */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
@@ -71,7 +71,7 @@ const CustomCardResults = styled(Card)`
 `;
 
 export function Itunes({ intl, itunesData, dispatchRequestItunesList, dispatchClearItunesList, maxwidth, padding }) {
-  // const [playing, setPlaying] = useState(false);
+  const [playing, setPlaying] = useState(false);
   // const [songUrl, setSongUrl] = useState();
 
   // const handlePlayOnClick = (previewUrl) => {
@@ -83,6 +83,10 @@ export function Itunes({ intl, itunesData, dispatchRequestItunesList, dispatchCl
   //     </div>
   //   );
   // };
+
+  useEffect(() => {
+    dispatchClearItunesList();
+  }, []);
 
   const handleOnChange = (inputText) => {
     if (!isEmpty(inputText)) {
@@ -111,7 +115,7 @@ export function Itunes({ intl, itunesData, dispatchRequestItunesList, dispatchCl
                         <hr />
                         <span style={{ fontWeight: 'bold' }}>{data[item].trackName}</span>
                         <div>
-                          <audio controls src={data[item].previewUrl} style={{ width: '100%' }}></audio>
+                          <audio controls id="audio" src={data[item].previewUrl} style={{ width: '100%' }}></audio>
                         </div>
                       </div>
                     </CustomCardResults>
