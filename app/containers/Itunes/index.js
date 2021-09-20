@@ -3,7 +3,7 @@
  * Itunes
  *
  */
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
@@ -48,8 +48,9 @@ const ContainerResults = styled.div`
   && {
     display: grid;
     grid-template-columns: auto auto auto;
+    grid-gap: 10px;
     flex-direction: row;
-    max-width: 600px;
+    max-width: 800px;
     width: 100%;
 
     margin: 0 auto;
@@ -60,7 +61,8 @@ const ContainerResults = styled.div`
 const CustomCardResults = styled(Card)`
   && {
     margin: 20px 0;
-    max-width: 200px;
+
+    max-width: 300px;
     height: 100%;
     color: ${(props) => props.color};
     ${(props) => props.color && `color: ${props.color}`};
@@ -69,12 +71,18 @@ const CustomCardResults = styled(Card)`
 `;
 
 export function Itunes({ intl, itunesData, dispatchRequestItunesList, dispatchClearItunesList, maxwidth, padding }) {
-  const [playing, setPlaying] = useState(false);
+  // const [playing, setPlaying] = useState(false);
+  // const [songUrl, setSongUrl] = useState();
 
-  const handlePlayOnClick = (previewUrl) => {
-    const audio = new Audio(previewUrl);
-    playing ? audio.play(previewUrl) : audio.pause(previewUrl);
-  };
+  // const handlePlayOnClick = (previewUrl) => {
+  //   console.log(previewUrl);
+  //   setPlaying(!playing);
+  //   return (
+  //     <div>
+  //       <audio constrols src={previewUrl}></audio>
+  //     </div>
+  //   );
+  // };
 
   const handleOnChange = (inputText) => {
     if (!isEmpty(inputText)) {
@@ -103,14 +111,7 @@ export function Itunes({ intl, itunesData, dispatchRequestItunesList, dispatchCl
                         <hr />
                         <span style={{ fontWeight: 'bold' }}>{data[item].trackName}</span>
                         <div>
-                          <button
-                            onClick={() => {
-                              setPlaying(!playing);
-                              handlePlayOnClick(data[item].previewUrl);
-                            }}
-                          >
-                            {playing ? 'Stop' : 'Play'}
-                          </button>
+                          <audio controls src={data[item].previewUrl} style={{ width: '100%' }}></audio>
                         </div>
                       </div>
                     </CustomCardResults>

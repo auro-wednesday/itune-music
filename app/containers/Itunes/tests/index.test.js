@@ -20,6 +20,14 @@ describe('<Itunes /> container tests', () => {
     const { baseElement } = renderProvider(<Itunes dispatchRequestItunesList={submitSpy} />);
     expect(baseElement).toMatchSnapshot();
   });
+  // it('should update playing state on button click', () => {
+  //   const mockbuttonclick = jest.fn();
+
+  //   const { getByTestId } = renderProvider(<button onClick={mockbuttonclick}></button>);
+
+  //   fireEvent.click(getByTestId('play-button'));
+  //   expect(mockbuttonclick).toHaveBeenCalled();
+  // });
 
   it('should call dipatchClearItunesList on enpty change', async () => {
     const getItunesListSpy = jest.fn();
