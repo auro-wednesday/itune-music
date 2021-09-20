@@ -17,7 +17,9 @@ describe('<Itunes /> container tests', () => {
     submitSpy = jest.fn();
   });
   it('should render and match the snapshot', () => {
-    const { baseElement } = renderProvider(<Itunes dispatchRequestItunesList={submitSpy} />);
+    const { baseElement } = renderProvider(
+      <Itunes dispatchRequestItunesList={submitSpy} dispatchClearItunesList={submitSpy} />
+    );
     expect(baseElement).toMatchSnapshot();
   });
   // it('should update playing state on button click', () => {
@@ -29,7 +31,7 @@ describe('<Itunes /> container tests', () => {
   //   expect(mockbuttonclick).toHaveBeenCalled();
   // });
 
-  it('should call dipatchClearItunesList on enpty change', async () => {
+  it('should call dipatchClearItunesList on empty change', async () => {
     const getItunesListSpy = jest.fn();
     const clearItunesListSpy = jest.fn();
     const { getByTestId } = renderProvider(
@@ -50,7 +52,9 @@ describe('<Itunes /> container tests', () => {
   });
 
   it('should call dispatchItunesList on change', async () => {
-    const { getByTestId } = renderProvider(<Itunes dispatchRequestItunesList={submitSpy} />);
+    const { getByTestId } = renderProvider(
+      <Itunes dispatchRequestItunesList={submitSpy} dispatchClearItunesList={submitSpy} />
+    );
     fireEvent.change(getByTestId('search-bar'), {
       target: { value: 'any' }
     });
