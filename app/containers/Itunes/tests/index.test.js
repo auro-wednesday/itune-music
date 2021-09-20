@@ -11,21 +11,25 @@ import { fireEvent } from '@testing-library/dom';
 import { ItunesTest as Itunes } from '../index';
 
 describe('<Itunes /> container tests', () => {
-  let submitSpy;
-
+  let props;
+  const mockDispatchRequestItunesList = jest.fn();
+  const mockClearItunesList = jest.fn();
   beforeEach(() => {
-    submitSpy = jest.fn();
+    props = { dispatchRequestItunesList: mockDispatchRequestItunesList, dispatchClearItunesList: mockClearItunesList };
+  });
+  afterEach(() => {
+    jest.clearAllMocks();
   });
   it('should render and match the snapshot', () => {
-    const { baseElement } = renderProvider(<Itunes dispatchItunesList={submitSpy} />);
+    const { baseElement } = renderProvider(<Itunes {...props} />);
     expect(baseElement).toMatchSnapshot();
   });
 
-  it('should call dipatchClearItunesList on enpty change', async () => {
+  it('should call dipatchClearItunesList on empty change', async () => {
     const getItunesListSpy = jest.fn();
     const clearItunesListSpy = jest.fn();
     const { getByTestId } = renderProvider(
-      <Itunes dispatchClearItunesList={clearItunesListSpy} dispatchItunesList={getItunesListSpy} />
+      <Itunes dispatchClearItunesList={clearItunesListSpy} dispatchRequestItunesList={getItunesListSpy} />
     );
 
     fireEvent.change(getByTestId('search-bar'), {
@@ -41,12 +45,12 @@ describe('<Itunes /> container tests', () => {
     expect(clearItunesListSpy).toBeCalled();
   });
 
-  it('should call dispatchItunesList on change', async () => {
-    const { getByTestId } = renderProvider(<Itunes dispatchItunesList={submitSpy} />);
+  it('should call dispatchRequestItunesList on change', async () => {
+    const { getByTestId } = renderProvider(<Itunes {...props} />);
     fireEvent.change(getByTestId('search-bar'), {
       target: { value: 'any' }
     });
     await timeout(500);
-    expect(submitSpy).toBeCalled();
+    expect(mockDispatchRequestItunesList).toBeCalled();
   });
 });

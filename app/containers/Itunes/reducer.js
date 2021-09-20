@@ -12,7 +12,7 @@ export const initialState = { itunesName: null, itunesData: [], itunesError: nul
 export const { Types: itunesTypes, Creators: itunesCreators } = createActions({
   requestGetItunesList: ['itunesName'],
   successGetItunesList: ['data'],
-  failureGetitunesList: ['error'],
+  failureGetItunesList: ['error'],
   clearItunesList: []
 });
 

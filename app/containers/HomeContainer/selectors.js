@@ -19,11 +19,12 @@ const selectHomeContainerDomain = (state) => state.homeContainer || initialState
 export const selectHomeContainer = () => createSelector(selectHomeContainerDomain, (substate) => substate);
 
 export const selectReposData = () =>
-  createSelector(selectHomeContainerDomain, (substate) => {console.log(substate);return get(substate, 'reposData')});
+  createSelector(selectHomeContainerDomain, (substate) => {
+    return get(substate, 'reposData');
+  });
 
 export const selectReposError = () =>
   createSelector(selectHomeContainerDomain, (substate) => get(substate, 'reposError'));
 
-export const selectRepoName = () =>
-  createSelector(selectHomeContainerDomain, (substate) => get(substate, 'repoName'));
+export const selectRepoName = () => createSelector(selectHomeContainerDomain, (substate) => get(substate, 'repoName'));
 export default selectHomeContainer;
