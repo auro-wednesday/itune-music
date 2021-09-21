@@ -3,7 +3,7 @@
  * Itunes
  *
  */
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
@@ -23,7 +23,7 @@ import { isEmpty } from 'lodash';
 import { itunesCreators } from './reducer';
 
 import itunesSaga from './saga';
-import Tracks from './Tracks';
+
 import { useHistory } from 'react-router';
 const { Search } = Input;
 
@@ -96,7 +96,10 @@ export function Itunes({ intl, itunesData, dispatchRequestItunesList, dispatchCl
             {Object.keys(data).map((item, id) => {
               if (data[item].kind === 'song') {
                 return (
-                  <div key={id} onClick={() => history.push(`/itunes/${data[item].trackName}`, data[item])}>
+                  <div
+                    key={id}
+                    onClick={() => history.push(`/${data[item].trackName}/${data[item].trackId}`, data[item])}
+                  >
                     <CustomCardResults>
                       <img src={data[item].artworkUrl100}></img>
                       <div>

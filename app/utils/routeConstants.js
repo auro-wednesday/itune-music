@@ -12,13 +12,11 @@ export default {
     props: {
       maxwidth: 500,
       padding: 20
-    },
-    routes: [
-      {
-        route: '/itunes/trackName',
-        props: 'itunesData'
-      }
-    ],
+    }
+  },
+  Tracks: {
+    route: '/:trackName/:trackId',
+
     exact: true
   }
 };
