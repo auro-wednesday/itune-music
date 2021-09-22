@@ -7,16 +7,16 @@ export default {
     },
     exact: true
   },
-  Itunes: {
+  itunes: {
     route: '/itunes',
     props: {
       maxwidth: 500,
       padding: 20
     }
   },
-  Tracks: {
-    route: '/:trackName/:trackId',
-
+  tracks: {
+    route: '/tracks/:trackId',
+    props: {},
     exact: true
   }
 };

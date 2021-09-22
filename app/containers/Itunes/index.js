@@ -3,7 +3,7 @@
  * Itunes
  *
  */
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
@@ -25,6 +25,7 @@ import { itunesCreators } from './reducer';
 import itunesSaga from './saga';
 
 import { useHistory } from 'react-router';
+import routeConstants from '@app/utils/routeConstants';
 const { Search } = Input;
 
 const CustomCard = styled(Card)`
@@ -73,9 +74,9 @@ const CustomCardResults = styled(Card)`
 `;
 
 export function Itunes({ intl, itunesData, dispatchRequestItunesList, dispatchClearItunesList, maxwidth, padding }) {
-  // useEffect(() => {
-  //   return dispatchClearItunesList();
-  // }, []);
+  useEffect(() => {
+    return dispatchClearItunesList();
+  }, []);
 
   const handleOnChange = (inputText) => {
     if (!isEmpty(inputText)) {
@@ -98,7 +99,12 @@ export function Itunes({ intl, itunesData, dispatchRequestItunesList, dispatchCl
                 return (
                   <div
                     key={id}
-                    onClick={() => history.push(`/${data[item].trackName}/${data[item].trackId}`, data[item])}
+                    onClick={() => {
+                      history.push(
+                        routeConstants.tracks.route.replace(':trackId', `${data[item].trackId}`),
+                        data[item]
+                      );
+                    }}
                   >
                     <CustomCardResults>
                       <img src={data[item].artworkUrl100}></img>

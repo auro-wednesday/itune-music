@@ -12,5 +12,9 @@
   "repository_stars": "Repository stars: {stars}",
   "wednesday_solutions": "Wednesday Solutions",
   "search_Itunes": "Itunes Search",
-  "some_music":"Lets listen to some music!!"
+  "some_music": "Lets listen to some music!!",
+  "track-Name": "Track Details",
+  "artist-Name": "{artistName}",
+  "collection-Name": "{collectionName}",
+  "country": "{country}"
 }

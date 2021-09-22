@@ -10,11 +10,11 @@ export const routeConfig = {
   },
   itunes: {
     component: Itunes,
-    ...routeConstants.Itunes
+    ...routeConstants.itunes
   },
   tracks: {
     component: Tracks,
-    ...routeConstants.Tracks
+    ...routeConstants.tracks
   },
   notFoundPage: {
     component: NotFound,
