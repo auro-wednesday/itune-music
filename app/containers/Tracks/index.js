@@ -39,25 +39,22 @@ const Container = styled.div`
 
 export function Tracks({ intl }) {
   // useInjectSaga({ key: 'tracks', saga });
-  let location = useLocation();
+  const location = useLocation();
+  // let trackId = useParams();
+  // let a = useRouteMatch();
 
   return (
     <div>
       <Container>
         <CustomCard title={intl.formatMessage({ id: 'track-Name' })}>
           <img src={location.state.artworkUrl100}></img>
+
           <div>
-            <span style={{ fontWeight: 'bold' }}>
-              <T id="artist-Name" values={{ artistName: `${location.state.artistName}` }} />
-            </span>
-            <br />
-            <span>
-              <T id="collection-Name" values={{ collectionName: `${location.state.collectionName}` }} />
-            </span>
-            <br />
-            <span style={{ fontWeight: 'bold' }}>
-              <T id="country" values={{ country: `${location.state.country}` }} />
-            </span>
+            <T id="artist-Name" values={{ artistName: location.state.artistName }} />
+
+            <T id="collection-Name" values={{ collectionName: location.state.collectionName }} />
+
+            <T id="country" values={{ country: location.state.country }} />
           </div>
         </CustomCard>
       </Container>

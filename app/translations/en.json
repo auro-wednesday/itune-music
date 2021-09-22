@@ -14,7 +14,7 @@
   "search_Itunes": "Itunes Search",
   "some_music": "Lets listen to some music!!",
   "track-Name": "Track Details",
-  "artist-Name": "{artistName}",
-  "collection-Name": "{collectionName}",
-  "country": "{country}"
+  "artist-Name": "Artist Name: {artistName}",
+  "collection-Name": "Album Name: {collectionName}",
+  "country": "Country: {country}"
 }
