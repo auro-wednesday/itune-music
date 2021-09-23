@@ -82,7 +82,78 @@ exports[`<Itunes /> container tests should render and match the snapshot 1`] = `
       <div
         class="Itunes__ContainerResults-pyq5w2-2 biAEKm"
       >
-        <div />
+        <div>
+          <div>
+            <div
+              class="Itunes__ContainerResults-pyq5w2-2 biAEKm"
+            >
+              <div
+                data-testid="track-card"
+              >
+                <div
+                  class="ant-card ant-card-bordered Itunes__CustomCardResults-pyq5w2-3 xcbTz"
+                >
+                  <div
+                    class="ant-card-body"
+                  >
+                    <img
+                      src="http://a1.itunes.apple.com/r10/Music/3b/6a/33/mzi.qzdqwsel.100x100-75.jpg"
+                    />
+                    <div>
+                      Jack Johnson
+                      <hr />
+                      <span
+                        style="font-weight: bold;"
+                      >
+                        Upside Down
+                      </span>
+                    </div>
+                    <div>
+                      <audio
+                        controls=""
+                        id="audio"
+                        src="http://a1099.itunes.apple.com/r10/Music/f9/54/43/mzi.gqvqlvcq.aac.p.m4p"
+                        style="width: 100%;"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                data-testid="track-card"
+              >
+                <div
+                  class="ant-card ant-card-bordered Itunes__CustomCardResults-pyq5w2-3 xcbTz"
+                >
+                  <div
+                    class="ant-card-body"
+                  >
+                    <img
+                      src="http://a1.itunes.apple.com/r10/Music/3b/6a/33/mzi.qzdqwsel.100x100-75.jpg"
+                    />
+                    <div>
+                      Jack Johnson
+                      <hr />
+                      <span
+                        style="font-weight: bold;"
+                      >
+                        Upside Down
+                      </span>
+                    </div>
+                    <div>
+                      <audio
+                        controls=""
+                        id="audio"
+                        src="http://a1099.itunes.apple.com/r10/Music/f9/54/43/mzi.gqvqlvcq.aac.p.m4p"
+                        style="width: 100%;"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -6,20 +6,44 @@
  */
 
 import React from 'react';
-import { renderProvider, timeout } from '@utils/testUtils';
+import { renderProvider, renderWithIntl, timeout } from '@utils/testUtils';
 import { fireEvent } from '@testing-library/dom';
 import { ItunesTest as Itunes } from '../index';
 
+import mockdata from '@app/utils/mockdata';
+
+jest.unmock('react-router-dom');
+const mockPush = jest.fn();
+jest.mock('react-router-dom', () => ({
+  __esModule: true,
+  useLocation: jest.fn().mockReturnValue({
+    pathname: '/',
+    search: '',
+    hash: '',
+    state: null,
+    key: '5nvxpbdafa'
+  }),
+  useHistory: jest.fn().mockReturnValue({
+    length: 2,
+    action: 'POP',
+    location: {
+      pathname: '/',
+      search: '',
+      hash: ''
+    },
+    push: (route) => mockPush(route)
+  })
+}));
 describe('<Itunes /> container tests', () => {
-  let props;
   const mockDispatchRequestItunesList = jest.fn();
   const mockClearItunesList = jest.fn();
-  beforeEach(() => {
-    props = { dispatchRequestItunesList: mockDispatchRequestItunesList, dispatchClearItunesList: mockClearItunesList };
-  });
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+  const mockItunesData = mockdata;
+  const props = {
+    dispatchRequestItunesList: mockDispatchRequestItunesList,
+    dispatchClearItunesList: mockClearItunesList,
+    itunesData: mockItunesData
+  };
+
   it('should render and match the snapshot', () => {
     const { baseElement } = renderProvider(<Itunes {...props} />);
     expect(baseElement).toMatchSnapshot();
@@ -52,5 +76,12 @@ describe('<Itunes /> container tests', () => {
     });
     await timeout(500);
     expect(mockDispatchRequestItunesList).toBeCalled();
+  });
+
+  it('shoud push track details page onClick', () => {
+    const { getAllByTestId } = renderWithIntl(<Itunes {...props} />);
+    expect(getAllByTestId('track-card').length).toBe(2);
+    fireEvent.click(getAllByTestId('track-card')[0]);
+    expect(mockPush).toHaveBeenCalled();
   });
 });

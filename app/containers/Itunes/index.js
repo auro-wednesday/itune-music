@@ -23,6 +23,9 @@ import { isEmpty } from 'lodash';
 import { itunesCreators } from './reducer';
 
 import itunesSaga from './saga';
+
+import { useHistory } from 'react-router-dom';
+import routeConstants from '@app/utils/routeConstants';
 const { Search } = Input;
 
 const CustomCard = styled(Card)`
@@ -71,6 +74,8 @@ const CustomCardResults = styled(Card)`
 `;
 
 export function Itunes({ intl, itunesData, dispatchRequestItunesList, dispatchClearItunesList, maxwidth, padding }) {
+  const history = useHistory();
+
   useEffect(() => {
     return dispatchClearItunesList();
   }, []);
@@ -94,16 +99,25 @@ export function Itunes({ intl, itunesData, dispatchRequestItunesList, dispatchCl
             {Object.keys(data).map((item, id) => {
               if (data[item].kind === 'song') {
                 return (
-                  <div key={id}>
+                  <div
+                    key={id}
+                    data-testid="track-card"
+                    onClick={() => {
+                      history.push(
+                        routeConstants.tracks.route.replace(':trackId', `${data[item].trackId}`),
+                        data[item]
+                      );
+                    }}
+                  >
                     <CustomCardResults>
                       <img src={data[item].artworkUrl100}></img>
                       <div>
                         {data[item].artistName}
                         <hr />
                         <span style={{ fontWeight: 'bold' }}>{data[item].trackName}</span>
-                        <div>
-                          <audio controls id="audio" src={data[item].previewUrl} style={{ width: '100%' }}></audio>
-                        </div>
+                      </div>
+                      <div>
+                        <audio controls id="audio" src={data[item].previewUrl} style={{ width: '100%' }}></audio>
                       </div>
                     </CustomCardResults>
                   </div>
@@ -126,7 +140,6 @@ export function Itunes({ intl, itunesData, dispatchRequestItunesList, dispatchCl
             placeholder="Search"
             type="text"
             onChange={(e) => debouncedHandleOnChange(e.target.value)}
-            onSearch={(searchText) => debouncedHandleOnChange(searchText)}
           />
         </CustomCard>
       </Container>
