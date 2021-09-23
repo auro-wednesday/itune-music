@@ -24,7 +24,7 @@ import { itunesCreators } from './reducer';
 
 import itunesSaga from './saga';
 
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import routeConstants from '@app/utils/routeConstants';
 const { Search } = Input;
 
@@ -74,6 +74,8 @@ const CustomCardResults = styled(Card)`
 `;
 
 export function Itunes({ intl, itunesData, dispatchRequestItunesList, dispatchClearItunesList, maxwidth, padding }) {
+  const history = useHistory();
+
   useEffect(() => {
     return dispatchClearItunesList();
   }, []);
@@ -85,7 +87,7 @@ export function Itunes({ intl, itunesData, dispatchRequestItunesList, dispatchCl
       dispatchClearItunesList();
     }
   };
-  const history = useHistory();
+
   const debouncedHandleOnChange = debounce(handleOnChange, 200);
 
   const renderItunesList = () => {
@@ -99,6 +101,7 @@ export function Itunes({ intl, itunesData, dispatchRequestItunesList, dispatchCl
                 return (
                   <div
                     key={id}
+                    data-testid="track-card"
                     onClick={() => {
                       history.push(
                         routeConstants.tracks.route.replace(':trackId', `${data[item].trackId}`),
@@ -137,7 +140,6 @@ export function Itunes({ intl, itunesData, dispatchRequestItunesList, dispatchCl
             placeholder="Search"
             type="text"
             onChange={(e) => debouncedHandleOnChange(e.target.value)}
-            onSearch={(searchText) => debouncedHandleOnChange(searchText)}
           />
         </CustomCard>
       </Container>
