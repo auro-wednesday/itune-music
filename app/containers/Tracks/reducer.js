@@ -4,22 +4,29 @@
  *
  */
 import produce from 'immer';
+import { get } from 'lodash';
 import { createActions } from 'reduxsauce';
 
-export const initialState = {};
+export const initialState = { trackId: null, trackData: [], trackError: null };
 
-export const { Types: tracksTypes, Creators: tracksCreators } = createActions({
-  defaultAction: ['somePayload']
+export const { Types: trackTypes, Creators: trackCreators } = createActions({
+  requestGetTrackData: ['trackId'],
+  successGetTrackData: ['data'],
+  failureGetTrackData: ['error'],
+  clearTrackData: []
 });
 
 /* eslint-disable default-case, no-param-reassign */
 export const tracksReducer = (state = initialState, action) =>
-  produce(state, (/* draft */) => {
+  produce(state, (draft) => {
     switch (action.type) {
-      case tracksTypes.DEFAULT_ACTION:
-        return { ...state, somePayload: action.somePayload };
-      default:
-        return state;
+      case trackTypes.CLEAR_TRACK_DATA:
+        return initialState;
+      case trackTypes.SUCCESS_GET_TRACK_DATA:
+        draft.trackData = action.data;
+        break;
+      case trackTypes.FAILURE_GET_TRACK_DATA:
+        draft.trackError = get(action.error, 'message', 'something_went_wrong');
     }
   });
 

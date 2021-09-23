@@ -1,3 +1,4 @@
+import { get } from 'lodash';
 import { createSelector } from 'reselect';
 import { initialState } from './reducer';
 
@@ -7,7 +8,8 @@ import { initialState } from './reducer';
 
 const selectTracksDomain = (state) => state.tracks || initialState;
 
-const makeSelectTracks = () => createSelector(selectTracksDomain, (substate) => substate);
+export const makeSelectTrack = () => createSelector(selectTracksDomain, (substate) => substate);
 
-export default makeSelectTracks;
-export { selectTracksDomain };
+export const selectTrackData = () => createSelector(selectTracksDomain, (substate) => get(substate, 'trackData'));
+export const selectTrackError = () => createSelector(selectTracksDomain, (substate) => get(substate, 'trackError'));
+export const selectTrackId = () => createSelector(selectTracksDomain, (substate) => get(substate, 'trackId'));
