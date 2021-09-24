@@ -45,7 +45,7 @@ export function Tracks({ intl, dispatchRequestGetTrackData, dispatchClearTrackDa
   const { trackId } = useParams();
 
   useEffect(() => {
-    if (trackId !== trackData.trackId) {
+    if (trackId !== trackData?.trackId) {
       dispatchRequestGetTrackData(trackId);
     }
   }, [trackId]);
@@ -85,7 +85,7 @@ const mapStateToProps = createStructuredSelector({
   trackId: selectTrackId()
 });
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   const { requestGetTrackData, clearTrackData } = trackCreators;
   return {
     dispatchRequestGetTrackData: (trackId) => dispatch(requestGetTrackData(trackId)),

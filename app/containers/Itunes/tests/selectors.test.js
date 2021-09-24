@@ -32,7 +32,7 @@ describe('Itunes selector tests', () => {
     expect(ituneDataSelector(mockedState)).toEqual(itunesData);
   });
 
-  it('should select the itunesName', () => {
+  it('should select the itunesError', () => {
     const itunesErrorSelector = selectItunesError();
     expect(itunesErrorSelector(mockedState)).toEqual(itunesError);
   });

@@ -1,4 +1,4 @@
-import { trackIdApi } from '@app/services/tests/trackIdApi';
+import { trackIdApi } from '@app/services/trackIdApi';
 import { takeLatest, call, put } from 'redux-saga/effects';
 import { trackTypes, trackCreators } from './reducer';
 // Individual exports for testing
