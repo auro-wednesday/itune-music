@@ -8,7 +8,7 @@
 import React from 'react';
 import { renderProvider, renderWithIntl, timeout } from '@utils/testUtils';
 import { fireEvent } from '@testing-library/dom';
-import { ItunesTest as Itunes } from '../index';
+import { ItunesTest as Itunes, mapDispatchToProps } from '../index';
 
 import mockdata from '@app/utils/mockdata';
 
@@ -83,5 +83,14 @@ describe('<Itunes /> container tests', () => {
     expect(getAllByTestId('track-card').length).toBe(2);
     fireEvent.click(getAllByTestId('track-card')[0]);
     expect(mockPush).toHaveBeenCalled();
+  });
+  it('should call dispatch when required', () => {
+    const dispatch = jest.fn();
+
+    mapDispatchToProps(dispatch).dispatchRequestItunesList('adele');
+    mapDispatchToProps(dispatch).dispatchClearItunesList();
+
+    expect(dispatch.mock.calls[0][0]).toEqual({ itunesName: 'adele', type: 'REQUEST_GET_ITUNES_LIST' });
+    expect(dispatch.mock.calls[1][0]).toEqual({ type: 'CLEAR_ITUNES_LIST' });
   });
 });

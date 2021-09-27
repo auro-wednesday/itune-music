@@ -9,6 +9,7 @@ import history from 'utils/history';
 import languageProviderReducer from 'containers/LanguageProvider/reducer';
 import homeContainerReducer from 'containers/HomeContainer/reducer';
 import itunesReducer from './containers/Itunes/reducer';
+import tracksReducer from './containers/Tracks/reducer';
 
 /**
  * Merges the main reducer with the router state and dynamically injected reducers
@@ -19,7 +20,8 @@ export default function createReducer(injectedReducer = {}) {
     language: languageProviderReducer,
     router: connectRouter(history),
     homeContainer: homeContainerReducer,
-    itunes: itunesReducer
+    itunes: itunesReducer,
+    tracks: tracksReducer
   });
 
   return rootReducer;
