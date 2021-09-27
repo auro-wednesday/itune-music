@@ -172,7 +172,7 @@ const mapStateToProps = createStructuredSelector({
   ItunesName: selectItunesName()
 });
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   const { requestGetItunesList, clearItunesList } = itunesCreators;
   return {
     dispatchRequestItunesList: (InputTerm) => dispatch(requestGetItunesList(InputTerm)),
