@@ -43,4 +43,13 @@ describe('HomContainer reducer tests', () => {
       })
     ).toEqual(expectedResult);
   });
+
+  it('should ensure that when CLEAR_GITHUB_REPOS is dispactched it clears all data', () => {
+    const expectedResult = { ...state, reposData: [] };
+    expect(
+      homeContainerReducer(state, {
+        type: homeContainerTypes.CLEAR_GITHUB_REPOS
+      })
+    ).toEqual(expectedResult);
+  });
 });
