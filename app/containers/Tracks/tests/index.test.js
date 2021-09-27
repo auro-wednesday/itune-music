@@ -36,6 +36,7 @@ describe('<Tracks/>', () => {
   it('should call dispatch when required', () => {
     const dispatch = jest.fn();
     mapDispatchToProps(dispatch).dispatchRequestGetTrackData(trackId);
+    mapDispatchToProps(dispatch).dispatchClearTrackData();
     expect(dispatch.mock.calls[0][0]).toEqual({ trackId: '120954025', type: 'REQUEST_GET_TRACK_DATA' });
   });
 });

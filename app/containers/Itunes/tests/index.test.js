@@ -88,7 +88,9 @@ describe('<Itunes /> container tests', () => {
     const dispatch = jest.fn();
 
     mapDispatchToProps(dispatch).dispatchRequestItunesList('adele');
-    // mapDispatchToProps().dispatchClearItunesList();
+    mapDispatchToProps(dispatch).dispatchClearItunesList();
+
     expect(dispatch.mock.calls[0][0]).toEqual({ itunesName: 'adele', type: 'REQUEST_GET_ITUNES_LIST' });
+    expect(dispatch.mock.calls[1][0]).toEqual({ type: 'CLEAR_ITUNES_LIST' });
   });
 });
