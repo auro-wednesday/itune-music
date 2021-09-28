@@ -76,17 +76,7 @@ describe('<HomeContainer /> tests', () => {
     await timeout(500);
     expect(submitSpy).toBeCalled();
   });
-  // it('should call dispatchGithubRepos on submit', async () => {
-  //   const { getByTestId } = renderWithIntl(<HomeContainer dispatchGithubRepos={submitSpy} />);
-  //   fireEvent.change(getByTestId('search-bar'), {
-  //     target: { value: 'some repo' }
-  //   });
 
-  //   fireEvent.keyDown(getByTestId('search-bar'), { key: 'Enter', code: 'Enter', charCode: 13 });
-
-  //   await timeout(500);
-  //   expect(submitSpy).toBeCalled();
-  // });
   it('should go to stories page on click', () => {
     const { getByTestId } = renderWithIntl(<HomeContainer dispatchGithubRepos={submitSpy} />);
 
