@@ -100,8 +100,8 @@ export function Itunes({ intl, itunesData, dispatchRequestItunesList, dispatchCl
               if (data[item].kind === 'song') {
                 return (
                   <div
-                    key={id}
                     data-testid="track-card"
+                    key={id}
                     onClick={() => {
                       history.push(
                         routeConstants.tracks.route.replace(':trackId', `${data[item].trackId}`),

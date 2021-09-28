@@ -10,7 +10,7 @@ import { renderProvider, renderWithIntl, timeout } from '@utils/testUtils';
 import { fireEvent } from '@testing-library/dom';
 import { ItunesTest as Itunes, mapDispatchToProps } from '../index';
 
-import mockdata from '@app/utils/mockdata';
+import { mockItunes } from '@app/utils/mockdata';
 
 jest.unmock('react-router-dom');
 const mockPush = jest.fn();
@@ -37,7 +37,8 @@ jest.mock('react-router-dom', () => ({
 describe('<Itunes /> container tests', () => {
   const mockDispatchRequestItunesList = jest.fn();
   const mockClearItunesList = jest.fn();
-  const mockItunesData = mockdata;
+  const mockItunesData = mockItunes;
+
   const props = {
     dispatchRequestItunesList: mockDispatchRequestItunesList,
     dispatchClearItunesList: mockClearItunesList,
@@ -84,6 +85,7 @@ describe('<Itunes /> container tests', () => {
     fireEvent.click(getAllByTestId('track-card')[0]);
     expect(mockPush).toHaveBeenCalled();
   });
+
   it('should call dispatch when required', () => {
     const dispatch = jest.fn();
 
