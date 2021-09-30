@@ -16,5 +16,7 @@
   "track-Name": "Track Details",
   "artist-Name": "Artist Name: {artistName}",
   "collection-Name": "Album Name: {collectionName}",
-  "country": "Country: {country}"
+  "country": "Country: {country}",
+  "release-date": "Date Released: {releaseDate}",
+  "itunes": " Go To Itunes Search"
 }

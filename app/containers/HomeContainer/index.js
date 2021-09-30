@@ -132,7 +132,7 @@ export function HomeContainer({
     <Container maxwidth={maxwidth} padding={padding}>
       <RightContent>
         <Clickable
-          textId="stories"
+          textId="itunes"
           onClick={() => {
             history.push('/itunes');
           }}

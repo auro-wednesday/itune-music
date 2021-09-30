@@ -17,7 +17,7 @@ exports[`<HomeContainer /> tests should call renderErrorState on error received 
             class="T__StyledText-gjlic1-0 kYcyRq"
             data-testid="t"
           >
-            Go to Storybook
+             Go To Itunes Search
           </p>
         </div>
       </div>
@@ -141,7 +141,7 @@ exports[`<HomeContainer /> tests should render and match the snapshot 1`] = `
             class="T__StyledText-gjlic1-0 kYcyRq"
             data-testid="t"
           >
-            Go to Storybook
+             Go To Itunes Search
           </p>
         </div>
       </div>
@@ -265,7 +265,7 @@ exports[`<HomeContainer /> tests should render when fetching data and match the 
             class="T__StyledText-gjlic1-0 kYcyRq"
             data-testid="t"
           >
-            Go to Storybook
+             Go To Itunes Search
           </p>
         </div>
       </div>

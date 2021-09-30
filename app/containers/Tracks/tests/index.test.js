@@ -11,6 +11,7 @@ import React from 'react';
 import { mapDispatchToProps, TracksTest as Tracks } from '../index';
 
 import { renderProvider, renderWithIntl, timeout } from '@app/utils/testUtils';
+
 jest.unmock('react-router-dom');
 jest.mock('react-router-dom', () => ({
   useParams: jest.fn().mockReturnValue({ trackId: '120954025' })
