@@ -124,14 +124,19 @@ export function HomeContainer({
       )
     );
   };
-  const refreshPage = () => {
-    history.push('stories');
-    window.location.reload();
-  };
+  // const refreshPage = () => {
+  //   history.push('stories');
+  //   window.location.reload();
+  // };
   return (
     <Container maxwidth={maxwidth} padding={padding}>
       <RightContent>
-        <Clickable textId="stories" onClick={refreshPage} />
+        <Clickable
+          textId="stories"
+          onClick={() => {
+            history.push('/itunes');
+          }}
+        />
       </RightContent>
       <CustomCard title={intl.formatMessage({ id: 'repo_search' })} maxwidth={maxwidth}>
         <T marginBottom={10} id="get_repo_details" />

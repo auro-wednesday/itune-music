@@ -1,9 +1,17 @@
 import { trackIdApi } from '@app/services/trackIdApi';
 import { takeLatest, call, put } from 'redux-saga/effects';
 import { trackTypes, trackCreators } from './reducer';
-// Individual exports for testing
+import { notification } from 'antd';
+
 const { REQUEST_GET_TRACK_DATA } = trackTypes;
 const { successGetTrackData, failureGetTrackData } = trackCreators;
+
+const openNotificationWithIcon = (type) => {
+  notification[type]({
+    message: 'Warning',
+    description: 'This URL does not return any Data'
+  });
+};
 
 export function* getTrackData(action) {
   try {
@@ -11,8 +19,11 @@ export function* getTrackData(action) {
     const {
       data: { results }
     } = response;
-
-    yield put(successGetTrackData(results[0]));
+    if (!results.length) {
+      openNotificationWithIcon('warning');
+    } else {
+      yield put(successGetTrackData(results[0]));
+    }
   } catch (error) {
     yield put(failureGetTrackData(error));
   }
