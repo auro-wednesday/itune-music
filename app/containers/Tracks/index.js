@@ -61,6 +61,7 @@ export function Tracks({ intl, dispatchRequestGetTrackData, dispatchClearTrackDa
           <T data-testid="album-name" id="collection-Name" values={{ collectionName: trackData.collectionName }} />
 
           <T data-testid="country-name" id="country" values={{ country: trackData.country }} />
+          <T data-testid="track-number" id="trackNumber" values={{ trackNumber: trackData.trackNumber }} />
           <T data-testid="release-date" id="release-date" values={{ releaseDate: trackData.releaseDate }} />
         </div>
       </CustomCard>
