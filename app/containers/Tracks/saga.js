@@ -1,7 +1,9 @@
 import { trackIdApi } from '@app/services/trackIdApi';
 import { takeLatest, call, put } from 'redux-saga/effects';
 import { trackTypes, trackCreators } from './reducer';
+import { push } from 'connected-react-router';
 import { notification } from 'antd';
+import routeConstants from '@app/utils/routeConstants';
 
 const { REQUEST_GET_TRACK_DATA } = trackTypes;
 const { successGetTrackData, failureGetTrackData } = trackCreators;
@@ -21,6 +23,7 @@ export function* getTrackData(action) {
     } = response;
     if (!results.length) {
       openNotificationWithIcon('warning');
+      yield put(push(routeConstants.itunes.route));
     } else {
       yield put(successGetTrackData(results[0]));
     }
