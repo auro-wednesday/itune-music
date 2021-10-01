@@ -42,4 +42,20 @@ describe('Tracks saga tests', () => {
     });
     expect(requestAPi).toHaveBeenCalledWith(trackId);
   });
+  it('should show notification and push itunes page', async () => {
+    const response = { data: { results: [] } };
+    const requestAPi = jest.spyOn(api, 'trackIdApi').mockImplementation(() => Promise.resolve(response));
+
+    const dispatched = [];
+
+    await runSaga({ dispatch: (action) => dispatched.push(action) }, getTrackData, { trackId });
+    expect(dispatched[0]).toEqual({
+      type: '@@router/CALL_HISTORY_METHOD',
+      payload: {
+        args: ['/itunes'],
+        method: 'push'
+      }
+    });
+    expect(requestAPi).toHaveBeenCalledWith(trackId);
+  });
 });

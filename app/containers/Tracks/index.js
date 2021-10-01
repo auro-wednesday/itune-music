@@ -14,7 +14,7 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 // import { useInjectSaga } from '@utils/injectSaga';
 import { makeSelectTrack, selectTrackData, selectTrackError, selectTrackId } from './selectors';
-
+import moment from 'moment';
 import { useParams } from 'react-router-dom';
 import { Card } from 'antd';
 import styled from 'styled-components';
@@ -61,7 +61,12 @@ export function Tracks({ intl, dispatchRequestGetTrackData, dispatchClearTrackDa
           <T data-testid="album-name" id="collection-Name" values={{ collectionName: trackData.collectionName }} />
 
           <T data-testid="country-name" id="country" values={{ country: trackData.country }} />
-          <T data-testid="release-date" id="release-date" values={{ releaseDate: trackData.releaseDate }} />
+          <T data-testid="track-number" id="track-number" values={{ trackNumber: trackData.trackNumber }} />
+          <T
+            data-testid="release-date"
+            id="release-date"
+            values={{ releaseDate: moment(trackData.releaseDate).format('DD/MM/YYYY') }}
+          />
         </div>
       </CustomCard>
     </Container>

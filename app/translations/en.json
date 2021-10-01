@@ -18,5 +18,6 @@
   "collection-Name": "Album Name: {collectionName}",
   "country": "Country: {country}",
   "release-date": "Date Released: {releaseDate}",
+  "track-number": "Track Number: {trackNumber}",
   "itunes": " Go To Itunes Search"
 }
